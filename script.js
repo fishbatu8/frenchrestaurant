@@ -370,6 +370,146 @@
     if (el) el.textContent = new Date().getFullYear();
   }
 
+  /* ── 9. THEME TOGGLE ───────────────────────────────────────────────────── */
+
+  function initThemeToggle() {
+    var btn = document.getElementById('theme-toggle');
+    if (!btn) return;
+
+    var icon = btn.querySelector('.theme-icon');
+    var STORAGE_KEY = 'kp-theme';
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      var isLight = theme === 'light';
+      btn.setAttribute('aria-pressed', String(isLight));
+      btn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+      icon.textContent = isLight ? '☾' : '☀';
+    }
+
+    var saved = localStorage.getItem(STORAGE_KEY);
+    var system = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    applyTheme(saved || system);
+
+    btn.addEventListener('click', function () {
+      var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      applyTheme(next);
+      localStorage.setItem(STORAGE_KEY, next);
+    });
+  }
+
+  /* ── 10. WHATSAPP FAB ───────────────────────────────────────────────────── */
+
+  function initWhatsAppFab() {
+    var fab = document.getElementById('whatsapp-fab');
+    if (!fab) return;
+    fab.addEventListener('click', function () {
+      if (typeof gtag === 'function') {
+        gtag('event', 'whatsapp_click', { event_category: 'engagement' });
+      }
+    });
+  }
+
+  /* ── 11. CONTACT FORM ──────────────────────────────────────────────────── */
+
+  function initContactForm() {
+    var form       = document.getElementById('contact-form');
+    var success    = document.getElementById('contact-success');
+    var successMsg = document.getElementById('contact-success-message');
+    var anotherBtn = document.getElementById('contact-another-btn');
+    if (!form) return;
+
+    var CONTACT_VALIDATORS = {
+      contactName: {
+        errorId:  'contact-name-error',
+        validate: function (v) { return v.trim().length >= 2; },
+        message:  'Please enter your full name (at least 2 characters).'
+      },
+      contactEmail: {
+        errorId:  'contact-email-error',
+        validate: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); },
+        message:  'Please enter a valid email address.'
+      },
+      contactSubject: {
+        errorId:  'contact-subject-error',
+        validate: function (v) { return v !== ''; },
+        message:  'Please select a subject.'
+      },
+      contactMessage: {
+        errorId:  'contact-message-error',
+        validate: function (v) { return v.trim().length >= 10; },
+        message:  'Please enter a message (at least 10 characters).'
+      }
+    };
+
+    function validateContactField(input) {
+      var rule    = CONTACT_VALIDATORS[input.name];
+      if (!rule) return true;
+      var errorEl = document.getElementById(rule.errorId);
+      var valid   = rule.validate(input.value);
+      if (errorEl) {
+        errorEl.textContent = valid ? '' : rule.message;
+      }
+      input.setAttribute('aria-invalid', valid ? 'false' : 'true');
+      return valid;
+    }
+
+    Object.keys(CONTACT_VALIDATORS).forEach(function (name) {
+      var el = form.elements[name];
+      if (!el) return;
+      el.addEventListener('blur', function () { validateContactField(el); });
+      el.addEventListener('input', function () {
+        if (el.getAttribute('aria-invalid') === 'true') validateContactField(el);
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var allValid = true;
+      Object.keys(CONTACT_VALIDATORS).forEach(function (name) {
+        var el = form.elements[name];
+        if (el && !validateContactField(el)) allValid = false;
+      });
+      if (!allValid) {
+        var firstError = form.querySelector('[aria-invalid="true"]');
+        if (firstError) firstError.focus();
+        return;
+      }
+
+      var lead = {
+        id:        Date.now(),
+        timestamp: new Date().toISOString(),
+        name:      form.elements.contactName.value.trim(),
+        email:     form.elements.contactEmail.value.trim(),
+        phone:     form.elements.contactPhone ? form.elements.contactPhone.value.trim() : '',
+        subject:   form.elements.contactSubject.value,
+        message:   form.elements.contactMessage.value.trim()
+      };
+      successMsg.textContent = 'Thank you, ' + lead.name + '. We have received your message and will be in touch within one business day.';
+      form.hidden    = true;
+      success.hidden = false;
+      success.focus();
+    });
+
+    if (anotherBtn) {
+      anotherBtn.addEventListener('click', function () {
+        form.reset();
+        Object.keys(CONTACT_VALIDATORS).forEach(function (name) {
+          var el = form.elements[name];
+          if (el) el.removeAttribute('aria-invalid');
+          var rule = CONTACT_VALIDATORS[name];
+          if (rule) {
+            var errEl = document.getElementById(rule.errorId);
+            if (errEl) errEl.textContent = '';
+          }
+        });
+        form.hidden    = false;
+        success.hidden = true;
+        form.elements.contactName.focus();
+      });
+    }
+  }
+
   /* ── INIT ───────────────────────────────────────────────────────────────── */
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -381,6 +521,9 @@
     initFormValidation();
     initFormSubmission();
     initFooterYear();
+    initThemeToggle();
+    initWhatsAppFab();
+    initContactForm();
   });
 
 })();
