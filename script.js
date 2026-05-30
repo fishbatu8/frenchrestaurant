@@ -489,6 +489,7 @@
       form.hidden    = true;
       success.hidden = false;
       success.focus();
+      triggerCelebration();
     });
 
     if (anotherBtn) {
@@ -508,6 +509,47 @@
         form.elements.contactName.focus();
       });
     }
+  }
+
+  /* ── 13. CELEBRATION ANIMATION ─────────────────────────────────────────── */
+
+  function triggerCelebration() {
+    var COLORS = ['#C9963A','#E53935','#43A047','#1E88E5','#8E24AA','#FB8C00','#E91E63','#00ACC1','#F9A825'];
+    var container = document.createElement('div');
+    container.className = 'celebration-container';
+    container.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(container);
+
+    /* Confetti pieces */
+    for (var i = 0; i < 90; i++) {
+      var piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.cssText =
+        'left:'               + (Math.random() * 100)                              + 'vw;' +
+        'background:'         + COLORS[Math.floor(Math.random() * COLORS.length)] + ';'   +
+        'width:'              + (6  + Math.random() * 8)                           + 'px;' +
+        'height:'             + (10 + Math.random() * 8)                           + 'px;' +
+        'animation-delay:'    + (Math.random() * 2.5)                              + 's;'  +
+        'animation-duration:' + (2.5 + Math.random() * 2)                         + 's;'  +
+        'transform:rotate('   + (Math.random() * 360)                             + 'deg);';
+      container.appendChild(piece);
+    }
+
+    /* Balloons */
+    for (var j = 0; j < 14; j++) {
+      var balloon = document.createElement('div');
+      balloon.className = 'celebration-balloon';
+      balloon.style.cssText =
+        'left:'               + (3 + Math.random() * 94)                           + 'vw;' +
+        'background:'         + COLORS[Math.floor(Math.random() * COLORS.length)] + ';'   +
+        'animation-delay:'    + (Math.random() * 1.8)                              + 's;'  +
+        'animation-duration:' + (3.5 + Math.random() * 2)                         + 's;';
+      container.appendChild(balloon);
+    }
+
+    setTimeout(function () {
+      if (container.parentNode) container.parentNode.removeChild(container);
+    }, 6000);
   }
 
   /* ── INIT ───────────────────────────────────────────────────────────────── */

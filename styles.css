@@ -1166,3 +1166,71 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 @media (prefers-reduced-motion: reduce) {
   .contact-detail-text a { transition: none; }
 }
+
+/* ── Celebration: Confetti & Balloons ───────────────────────────────────── */
+.celebration-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  border-radius: 2px;
+  animation: confetti-fall linear forwards;
+}
+
+@keyframes confetti-fall {
+  0%   { top: -20px; opacity: 1; }
+  85%  { opacity: 1; }
+  100% { top: 105vh;  opacity: 0; }
+}
+
+.celebration-balloon {
+  position: absolute;
+  bottom: -130px;
+  width: 44px;
+  height: 54px;
+  border-radius: 50%;
+  animation: balloon-rise ease-in-out forwards;
+}
+
+/* Diamond knot at the bottom of each balloon */
+.celebration-balloon::before {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 9px;
+  height: 9px;
+  background: inherit;
+}
+
+/* String hanging below the balloon */
+.celebration-balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -34px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 28px;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+@keyframes balloon-rise {
+  0%   { bottom: -130px; opacity: 0; transform: translateX(0); }
+  8%   { opacity: 1; }
+  40%  { transform: translateX(14px); }
+  70%  { transform: translateX(-12px); }
+  85%  { opacity: 1; }
+  100% { bottom: 110vh; opacity: 0; transform: translateX(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celebration-container { display: none; }
+}
