@@ -720,6 +720,47 @@
     <span class="whatsapp-fab__tooltip">Chat on WhatsApp</span>
   </a>
 
+  <!-- ── ELLIE CHATBOT ────────────────────────────────────────────────────── -->
+  <div id="ellie-panel" class="ellie-panel" hidden
+       role="dialog" aria-modal="false" aria-label="Ellie chatbot">
+    <div class="ellie-header">
+      <div class="ellie-header-info">
+        <span class="ellie-avatar" aria-hidden="true">E</span>
+        <div>
+          <p class="ellie-name">Ellie</p>
+          <p class="ellie-status">Your dining assistant</p>
+        </div>
+      </div>
+      <div class="ellie-header-btns">
+        <button class="ellie-minimize-btn" id="ellie-minimize-btn" aria-label="Minimise chat">&#8722;</button>
+        <button class="ellie-close-btn"    id="ellie-close-btn"    aria-label="Close chat">&times;</button>
+      </div>
+    </div>
+    <div class="ellie-messages" id="ellie-messages"
+         role="log" aria-live="polite" aria-label="Chat messages"></div>
+    <div class="ellie-input-row">
+      <input type="text" id="ellie-input" class="ellie-input"
+             placeholder="Type your question&#8230;" autocomplete="off"
+             aria-label="Your message" maxlength="200" />
+      <button id="ellie-send-btn" class="ellie-send-btn" aria-label="Send message">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             width="18" height="18" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <button id="ellie-toggle-btn" class="ellie-toggle-btn"
+          aria-label="Chat with Ellie" aria-expanded="false">
+    <svg class="ellie-toggle-icon" viewBox="0 0 24 24" fill="currentColor"
+         width="22" height="22" aria-hidden="true">
+      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z"/>
+    </svg>
+  </button>
+
   <script src="script.js"></script>
 </body>
 </html>

@@ -1247,3 +1247,283 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 @media (prefers-reduced-motion: reduce) {
   .celebration-container { display: none; }
 }
+
+/* ── Ellie Chatbot ──────────────────────────────────────────────────────── */
+
+/* Toggle button (FAB) — sits above the WhatsApp button */
+.ellie-toggle-btn {
+  position: fixed;
+  bottom: 9rem;
+  right: var(--space-lg, 4rem);
+  z-index: 1000;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--color-gold);
+  color: var(--color-charcoal-dark);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ellie-toggle-btn:hover,
+.ellie-toggle-btn:focus-visible {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.38);
+}
+
+.ellie-toggle-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Chat panel */
+.ellie-panel {
+  position: fixed;
+  bottom: 14rem;
+  right: var(--space-lg, 4rem);
+  z-index: 1001;
+  width: 340px;
+  max-height: 490px;
+  background: var(--color-charcoal-dark);
+  border: 1px solid var(--color-border-gold);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.48);
+  overflow: hidden;
+  animation: ellie-slide-in 0.22s ease;
+}
+
+.ellie-panel[hidden] { display: none; }
+
+@keyframes ellie-slide-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* Header */
+.ellie-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  background: var(--color-charcoal);
+  border-bottom: 1px solid var(--color-border-gold);
+  flex-shrink: 0;
+}
+
+.ellie-header-info {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.ellie-avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--color-gold);
+  color: var(--color-charcoal-dark);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0;
+}
+
+.ellie-name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--color-gold);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.ellie-status {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  line-height: 1;
+  margin: 0;
+}
+
+.ellie-header-btns {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.ellie-minimize-btn,
+.ellie-close-btn {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.ellie-minimize-btn:hover,
+.ellie-close-btn:hover {
+  color: var(--color-cream);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ellie-minimize-btn:focus-visible,
+.ellie-close-btn:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 1px;
+}
+
+/* Message area */
+.ellie-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  scroll-behavior: smooth;
+}
+
+.ellie-messages::-webkit-scrollbar        { width: 4px; }
+.ellie-messages::-webkit-scrollbar-track  { background: transparent; }
+.ellie-messages::-webkit-scrollbar-thumb  { background: var(--color-border-gold); border-radius: 2px; }
+
+/* Chat bubbles */
+.ellie-bubble {
+  max-width: 84%;
+  padding: 0.6rem 0.88rem;
+  border-radius: 14px;
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.ellie-bubble--bot {
+  align-self: flex-start;
+  background: var(--color-charcoal);
+  color: var(--color-cream);
+  border-bottom-left-radius: 3px;
+  border: 1px solid var(--color-border-gold);
+}
+
+.ellie-bubble--user {
+  align-self: flex-end;
+  background: var(--color-gold);
+  color: var(--color-charcoal-dark);
+  border-bottom-right-radius: 3px;
+  font-weight: 500;
+}
+
+/* Quick-reply suggestion chips */
+.ellie-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.25rem 0 0.5rem;
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.ellie-suggestion {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  background: transparent;
+  border: 1px solid var(--color-border-gold);
+  color: var(--color-gold);
+  border-radius: 12px;
+  padding: 0.28rem 0.62rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.ellie-suggestion:hover,
+.ellie-suggestion:focus-visible {
+  background: var(--color-gold);
+  color: var(--color-charcoal-dark);
+}
+
+.ellie-suggestion:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+
+/* Input row */
+.ellie-input-row {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.7rem 0.85rem;
+  border-top: 1px solid var(--color-border-gold);
+  background: var(--color-charcoal);
+  flex-shrink: 0;
+}
+
+.ellie-input {
+  flex: 1;
+  background: var(--color-charcoal-dark);
+  border: 1px solid var(--color-border-gold);
+  border-radius: 20px;
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  padding: 0.52rem 1rem;
+  outline: none;
+  transition: border-color var(--transition-fast);
+  min-width: 0;
+}
+
+.ellie-input::placeholder { color: var(--color-text-muted); opacity: 1; }
+.ellie-input:focus         { border-color: var(--color-gold); }
+
+.ellie-send-btn {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--color-gold);
+  color: var(--color-charcoal-dark);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.ellie-send-btn:hover          { opacity: 0.82; }
+.ellie-send-btn:focus-visible  { outline: 2px solid var(--color-cream); outline-offset: 2px; }
+
+/* Responsive */
+@media (max-width: 480px) {
+  .ellie-toggle-btn {
+    bottom: 5.75rem;
+    right: 1.25rem;
+    width: 3rem;
+    height: 3rem;
+  }
+  .ellie-panel {
+    bottom: 9.5rem;
+    right: 0.75rem;
+    left: 0.75rem;
+    width: auto;
+    max-height: 68vh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ellie-panel         { animation: none; }
+  .ellie-toggle-btn,
+  .ellie-minimize-btn,
+  .ellie-close-btn,
+  .ellie-suggestion,
+  .ellie-send-btn      { transition: none; }
+}

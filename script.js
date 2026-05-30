@@ -590,6 +590,298 @@
     }, 14000);
   }
 
+  /* ── 14. ELLIE FAQ CHATBOT ─────────────────────────────────────────────── */
+
+  var ELLIE_FAQ = [
+    /* ── General ── */
+    { id: 'hours',
+      keywords: ['hour', 'open', 'close', 'time', 'schedule', 'when', 'operating', 'timing', 'lunch', 'dinner'],
+      question: 'What are your opening hours?',
+      answer: 'We are open Tuesday–Friday: Lunch 11:30–14:00 & Dinner 17:30–22:00.\nSaturday–Sunday: Dinner only 17:30–22:30.\nWe are closed on Mondays.' },
+
+    { id: 'location',
+      keywords: ['where', 'address', 'location', 'duxton', 'find', 'directions', 'map', 'get there', 'mrt', 'bus'],
+      question: 'Where are you located?',
+      answer: '22 Duxton Hill, Singapore 089605.\nWe are a 5-minute walk from Tanjong Pagar MRT (Exit A). Street parking is available on Duxton Road.' },
+
+    { id: 'parking',
+      keywords: ['park', 'parking', 'car', 'drive', 'valet', 'carpark'],
+      question: 'Is there parking available?',
+      answer: 'Street parking is on Duxton Road and Duxton Plain Park. Tanjong Pagar Plaza car park is a short walk away. We recommend public transport — Tanjong Pagar MRT (Exit A) is just 5 minutes.' },
+
+    { id: 'reservation',
+      keywords: ['book', 'reserv', 'table', 'seat', 'walk-in', 'walkin', 'walk in'],
+      question: 'How do I make a reservation?',
+      answer: 'Book online via the Reservations section on our website, or call +65 6224 8899. We recommend booking at least 48 hours ahead, especially for weekends.' },
+
+    { id: 'dress',
+      keywords: ['dress', 'code', 'wear', 'attire', 'smart casual', 'formal', 'cloth', 'outfit'],
+      question: 'Is there a dress code?',
+      answer: 'We observe smart casual attire. Elegant casual clothing is always appreciated. Beachwear, sportswear, and flip-flops are not permitted.' },
+
+    { id: 'dietary',
+      keywords: ['vegan', 'vegetarian', 'halal', 'allerg', 'gluten', 'dietary', 'kosher', 'dairy', 'nut', 'intoleran', 'special diet'],
+      question: 'Do you cater to dietary requirements?',
+      answer: 'Yes! Please inform us of any dietary requirements or allergies when booking, or at least 24 hours before your visit. We accommodate most needs including vegetarian, gluten-free, and nut-free options. We are not currently halal-certified.' },
+
+    { id: 'children',
+      keywords: ['child', 'kid', 'baby', 'infant', 'highchair', 'toddler', 'family', 'little one'],
+      question: 'Are children welcome?',
+      answer: 'Children are warmly welcome! High chairs are available on request. Please mention this when booking so we can seat you comfortably.' },
+
+    { id: 'group',
+      keywords: ['group', 'large party', 'corporate', 'function', 'event', 'company', 'team', 'colleagues', 'big group'],
+      question: 'Do you accommodate large group bookings?',
+      answer: 'Yes — for groups of 10 or more, please contact us at +65 6224 8899 or reservations@kungfupanda.sg. Private dining rooms accommodate up to 30 guests.' },
+
+    { id: 'payment',
+      keywords: ['pay', 'payment', 'cash', 'card', 'visa', 'mastercard', 'amex', 'credit', 'debit', 'paynow', 'nets', 'apple pay', 'google pay'],
+      question: 'What payment methods do you accept?',
+      answer: 'We accept Visa, Mastercard, American Express, NETS, PayNow, Apple Pay, and Google Pay. Cash is also welcome.' },
+
+    { id: 'wifi',
+      keywords: ['wifi', 'wi-fi', 'internet', 'wireless', 'password', 'connect'],
+      question: 'Is Wi-Fi available?',
+      answer: 'Yes — complimentary Wi-Fi is available for all guests. Ask our staff for the access details when you are seated.' },
+
+    /* ── Gift Cards ── */
+    { id: 'giftcard-exists',
+      keywords: ['gift card', 'gift voucher', 'voucher', 'gift certificate', 'present', 'give as gift'],
+      question: 'Do you offer gift cards?',
+      answer: 'Yes! Kungfu Panda gift cards are available in denominations of S$50, S$100, S$200, and S$500 — the perfect present for any occasion.' },
+
+    { id: 'giftcard-purchase',
+      keywords: ['buy gift', 'purchase gift', 'get gift card', 'order gift', 'how to buy'],
+      question: 'How do I purchase a gift card?',
+      answer: 'Gift cards are available in-restaurant, by phone (+65 6224 8899), or by email (reservations@kungfupanda.sg). Physical cards are issued in-restaurant; e-gift cards can be emailed directly to the recipient.' },
+
+    { id: 'giftcard-expiry',
+      keywords: ['gift card expir', 'voucher expir', 'gift expire', 'valid gift', 'how long gift'],
+      question: 'Do gift cards expire?',
+      answer: 'Gift cards are valid for 24 months from the date of purchase. No extensions are available, so please use them in good time!' },
+
+    { id: 'giftcard-balance',
+      keywords: ['gift card balance', 'check gift', 'remaining gift', 'how much gift', 'balance voucher'],
+      question: 'How do I check my gift card balance?',
+      answer: 'Call us on +65 6224 8899 or present your card in-restaurant and our team will check the remaining balance for you.' },
+
+    { id: 'giftcard-use',
+      keywords: ['use gift card', 'redeem gift', 'spend gift', 'gift card pay'],
+      question: 'How do I use a gift card?',
+      answer: 'Present your physical or e-gift card to our staff at payment. Gift cards are valid for dine-in only and cannot be exchanged for cash.' },
+
+    /* ── Rewards Program ── */
+    { id: 'rewards-exists',
+      keywords: ['reward', 'loyalty', 'member', 'points', 'programme', 'program', 'panda reward'],
+      question: 'Do you have a rewards / loyalty program?',
+      answer: 'Yes! Panda Rewards is our free loyalty program. Earn 1 point per S$1 spent and enjoy exclusive perks including birthday privileges and priority reservations.' },
+
+    { id: 'rewards-join',
+      keywords: ['join reward', 'sign up reward', 'register reward', 'how to join', 'enroll', 'enrol', 'become member'],
+      question: 'How do I join Panda Rewards?',
+      answer: 'Sign up free at the restaurant or email rewards@kungfupanda.sg with your full name and contact details. Your card will be ready on your next visit.' },
+
+    { id: 'rewards-earn',
+      keywords: ['earn point', 'how many point', 'get point', 'accumulate', 'how point work'],
+      question: 'How do I earn rewards points?',
+      answer: 'Earn 1 point per S$1 spent on food and beverages during dine-in. Present your membership card when paying. Corkage fees and room hire do not earn points.' },
+
+    { id: 'rewards-redeem',
+      keywords: ['redeem', 'use point', 'spend point', 'reward voucher', 'convert point', 'cash point'],
+      question: 'How do I redeem my rewards points?',
+      answer: '100 points = S$5 dining credit. Present your card at payment and ask to redeem. Minimum redemption is 100 points (S$5).' },
+
+    { id: 'rewards-expiry',
+      keywords: ['point expir', 'reward expir', 'point expire', 'loyalty expir', 'point valid'],
+      question: 'Do rewards points expire?',
+      answer: 'Points are valid for 12 months from the date earned. They expire after 12 consecutive months of no earning or redeeming activity.' },
+
+    { id: 'rewards-birthday',
+      keywords: ['birthday', 'bday', 'birth day', 'anniversary reward', 'birthday benefit', 'birthday discount'],
+      question: 'Are there birthday or anniversary benefits?',
+      answer: 'Panda Rewards members receive a complimentary dessert and 10% off their birthday month (dine-in, member\'s table). Please mention this when reserving.' },
+
+    /* ── Themed Party Arrangements ── */
+    { id: 'themed-party',
+      keywords: ['theme', 'themed party', 'private party', 'celebration', 'birthday party', 'anniversary party', 'event package', 'party arrangement'],
+      question: 'Do you host themed dining events and private parties?',
+      answer: 'Absolutely! We offer bespoke themed party arrangements for birthdays, anniversaries, corporate events, and special celebrations. Our events team curates décor, menu, and entertainment to suit your theme.' },
+
+    { id: 'themed-packages',
+      keywords: ['theme package', 'what package', 'party package', 'party option', 'available theme'],
+      question: 'What themed packages are available?',
+      answer: 'Our signature packages:\n🏮 Red Lantern — classic Chinese banquet with traditional décor\n🐼 Panda Party — fun, informal setup ideal for birthdays\n🎋 Garden of Serenity — elegant botanical theme with fresh florals\n🌟 Imperial Banquet — premium 10-course feast in a full private room\nCustom themes are also available — contact our events team to discuss.' },
+
+    { id: 'themed-advance',
+      keywords: ['how far advance', 'notice party', 'when to book party', 'book event', 'plan party', 'lead time'],
+      question: 'How far in advance should I book a themed party?',
+      answer: 'We recommend at least 2 weeks for standard arrangements and 4–6 weeks for bespoke or large events. Peak dates (Lunar New Year, Valentine\'s Day, year-end) fill up quickly.' },
+
+    { id: 'themed-decorations',
+      keywords: ['own decoration', 'bring decoration', 'external decorator', 'personal decoration', 'decorate'],
+      question: 'Can I bring my own decorations?',
+      answer: 'Yes, with prior approval. No open-flame candles (LED candles are fine), no loose confetti, and no adhesive directly on walls or furniture. Our team is happy to set up your decorations before guests arrive.' },
+
+    { id: 'themed-minimum',
+      keywords: ['minimum spend', 'minimum charge', 'private room charge', 'event cost', 'hire fee', 'room hire'],
+      question: 'Is there a minimum spend for private events?',
+      answer: 'Private dining starts with a minimum F&B spend of S$1,200 for a semi-private enclosure (up to 15 guests) and S$2,500 for the full private room (up to 30 guests). Room hire fees are waived when the minimum is met.' },
+
+    { id: 'themed-cake',
+      keywords: ['outside cake', 'own cake', 'bring cake', 'external cake', 'birthday cake', 'cake fee'],
+      question: 'Can I bring an outside cake?',
+      answer: 'Yes! A cake handling fee of S$30 applies (covers refrigeration, plating, and service). Please let us know in advance so we can prepare.' },
+
+    /* ── Corkage Fee ── */
+    { id: 'corkage-fee',
+      keywords: ['corkage', 'bring wine', 'own wine', 'own bottle', 'byob', 'bring alcohol', 'bring bottle', 'bring my own'],
+      question: 'What is your corkage fee?',
+      answer: 'Corkage is S$45 per 750ml bottle of still wine, and S$55 per bottle of Champagne or sparkling wine. Spirits may not be brought from outside.' },
+
+    { id: 'corkage-limit',
+      keywords: ['how many bottle', 'bottle limit', 'maximum bottle', 'number of bottle', 'limit bottle'],
+      question: 'Is there a limit on how many bottles I can bring?',
+      answer: 'Up to 2 bottles per reservation (subject to corkage). For larger groups or private events, up to 4 bottles may be permitted — please check with our team.' },
+
+    { id: 'corkage-type',
+      keywords: ['what wine', 'type of wine', 'type alcohol', 'bring spirit', 'bring beer', 'beer corkage', 'spirit allowed'],
+      question: 'What types of beverages can I bring?',
+      answer: 'Still and sparkling wines only. Spirits, beer, and pre-mixed drinks may not be brought from outside. Our in-house wine and cocktail list is curated to complement our Hunan menu.' },
+
+    { id: 'corkage-waive',
+      keywords: ['waive corkage', 'no corkage', 'corkage free', 'corkage waiv', 'free corkage'],
+      question: 'Can the corkage fee be waived?',
+      answer: 'The corkage fee may be waived at management\'s discretion when a guest also purchases a bottle from our wine list. Please speak to our sommelier or host on the evening.' }
+  ];
+
+  function initEllieChatbot() {
+    var panel       = document.getElementById('ellie-panel');
+    var messages    = document.getElementById('ellie-messages');
+    var input       = document.getElementById('ellie-input');
+    var sendBtn     = document.getElementById('ellie-send-btn');
+    var toggleBtn   = document.getElementById('ellie-toggle-btn');
+    var minimizeBtn = document.getElementById('ellie-minimize-btn');
+    var closeBtn    = document.getElementById('ellie-close-btn');
+    if (!panel) return;
+
+    var isOpen = false;
+
+    function addBotMessage(text) {
+      removeSuggestions();
+      var bubble = document.createElement('div');
+      bubble.className = 'ellie-bubble ellie-bubble--bot';
+      /* Safely render \n as <br> without innerHTML on user content */
+      var parts = text.split('\n');
+      parts.forEach(function (part, idx) {
+        bubble.appendChild(document.createTextNode(part));
+        if (idx < parts.length - 1) bubble.appendChild(document.createElement('br'));
+      });
+      messages.appendChild(bubble);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function addUserMessage(text) {
+      removeSuggestions();
+      var bubble = document.createElement('div');
+      bubble.className = 'ellie-bubble ellie-bubble--user';
+      bubble.textContent = text;
+      messages.appendChild(bubble);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function removeSuggestions() {
+      var el = messages.querySelector('.ellie-suggestions');
+      if (el) el.remove();
+    }
+
+    function showSuggestions(chips) {
+      var row = document.createElement('div');
+      row.className = 'ellie-suggestions';
+      chips.forEach(function (label) {
+        var btn = document.createElement('button');
+        btn.className = 'ellie-suggestion';
+        btn.textContent = label;
+        btn.addEventListener('click', function () { handleUserInput(label); });
+        row.appendChild(btn);
+      });
+      messages.appendChild(row);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function findAnswer(query) {
+      var q = query.toLowerCase();
+      var best = null;
+      var bestScore = 0;
+      ELLIE_FAQ.forEach(function (entry) {
+        var score = 0;
+        entry.keywords.forEach(function (kw) {
+          if (q.indexOf(kw.toLowerCase()) !== -1) score++;
+        });
+        if (score > bestScore) { bestScore = score; best = entry; }
+      });
+      return bestScore > 0 ? best : null;
+    }
+
+    function handleUserInput(text) {
+      var trimmed = text.trim();
+      if (!trimmed) return;
+      addUserMessage(trimmed);
+      input.value = '';
+      var match = findAnswer(trimmed);
+      if (match) {
+        addBotMessage(match.answer);
+      } else {
+        addBotMessage('I\'m not sure about that one — but our team would love to help! 🐼\nCall +65 6224 8899 or email reservations@kungfupanda.sg and we\'ll get back to you within one business day.');
+      }
+      showSuggestions(['Opening hours', 'Gift cards', 'Rewards program', 'Corkage fee', 'Party arrangements']);
+    }
+
+    function openPanel() {
+      panel.hidden = false;
+      isOpen = true;
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      toggleBtn.setAttribute('aria-label', 'Close Ellie chat');
+      if (messages.children.length === 0) {
+        addBotMessage('Hello, I\'m Ellie. How can I delight you today? 😊');
+        showSuggestions(['Opening hours', 'Reservations', 'Gift cards', 'Corkage fee', 'Rewards program']);
+      }
+      setTimeout(function () { input.focus(); }, 80);
+    }
+
+    function closePanel() {
+      panel.hidden = true;
+      isOpen = false;
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      toggleBtn.setAttribute('aria-label', 'Chat with Ellie');
+      toggleBtn.focus();
+    }
+
+    toggleBtn.addEventListener('click', function () {
+      if (isOpen) { closePanel(); } else { openPanel(); }
+    });
+
+    minimizeBtn.addEventListener('click', closePanel);
+
+    closeBtn.addEventListener('click', function () {
+      panel.hidden = true;
+      isOpen = false;
+      messages.innerHTML = '';   /* full reset — next open starts fresh */
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      toggleBtn.setAttribute('aria-label', 'Chat with Ellie');
+      toggleBtn.focus();
+    });
+
+    sendBtn.addEventListener('click', function () { handleUserInput(input.value); });
+
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); handleUserInput(input.value); }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && isOpen) closePanel();
+    });
+  }
+
   /* ── INIT ───────────────────────────────────────────────────────────────── */
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -604,6 +896,7 @@
     initThemeToggle();
     initWhatsAppFab();
     initContactForm();
+    initEllieChatbot();
   });
 
 })();
