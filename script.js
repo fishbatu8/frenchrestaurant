@@ -513,43 +513,81 @@
 
   /* ── 13. CELEBRATION ANIMATION ─────────────────────────────────────────── */
 
+  function shadeColor(hex, amt) {
+    var num = parseInt(hex.replace('#', ''), 16);
+    var r = Math.min(255, Math.max(0, (num >> 16)         + amt));
+    var g = Math.min(255, Math.max(0, ((num >> 8) & 0xff) + amt));
+    var b = Math.min(255, Math.max(0, (num & 0xff)        + amt));
+    return '#' + ((1 << 24) | (r << 16) | (g << 8) | b).toString(16).slice(1);
+  }
+
   function triggerCelebration() {
-    var COLORS = ['#C9963A','#E53935','#43A047','#1E88E5','#8E24AA','#FB8C00','#E91E63','#00ACC1','#F9A825'];
+    var COLORS = [
+      '#FFD600', /* vivid amber-gold   */
+      '#FF1744', /* vivid red          */
+      '#00E676', /* vivid green        */
+      '#2979FF', /* vivid blue         */
+      '#D500F9', /* vivid purple       */
+      '#FF6D00', /* vivid orange       */
+      '#F50057', /* vivid rose         */
+      '#00E5FF', /* vivid cyan         */
+      '#FFEA00', /* vivid yellow       */
+      '#76FF03', /* vivid lime         */
+      '#FF4081', /* hot pink           */
+      '#1DE9B6'  /* vivid teal         */
+    ];
+    var SHAPES = ['2px', '50%', '3px 12px', '50% 10%'];
+
     var container = document.createElement('div');
     container.className = 'celebration-container';
     container.setAttribute('aria-hidden', 'true');
     document.body.appendChild(container);
 
-    /* Confetti pieces */
+    /* Confetti pieces — gradient + box-shadow for 3D depth */
     for (var i = 0; i < 90; i++) {
-      var piece = document.createElement('div');
+      var color   = COLORS[Math.floor(Math.random() * COLORS.length)];
+      var lighter = shadeColor(color,  75);
+      var darker  = shadeColor(color, -65);
+      var piece   = document.createElement('div');
       piece.className = 'confetti-piece';
       piece.style.cssText =
-        'left:'               + (Math.random() * 100)                              + 'vw;' +
-        'background:'         + COLORS[Math.floor(Math.random() * COLORS.length)] + ';'   +
-        'width:'              + (6  + Math.random() * 8)                           + 'px;' +
-        'height:'             + (10 + Math.random() * 8)                           + 'px;' +
-        'animation-delay:'    + (Math.random() * 2.5)                              + 's;'  +
-        'animation-duration:' + (2.5 + Math.random() * 2)                         + 's;'  +
-        'transform:rotate('   + (Math.random() * 360)                             + 'deg);';
+        'left:'               + (Math.random() * 100)                        + 'vw;'  +
+        'background:linear-gradient(135deg,' + lighter + ',' + color + ',' + darker + ');' +
+        'width:'              + (7  + Math.random() * 9)                     + 'px;'  +
+        'height:'             + (12 + Math.random() * 10)                    + 'px;'  +
+        'border-radius:'      + SHAPES[Math.floor(Math.random() * SHAPES.length)]    + ';'   +
+        'box-shadow:2px 3px 4px rgba(0,0,0,0.28),inset 0 1px 0 rgba(255,255,255,0.45);' +
+        'animation-delay:'    + (Math.random() * 3.5)                        + 's;'   +
+        'animation-duration:' + (5   + Math.random() * 3)                   + 's;'   +
+        'transform:rotate('   + (Math.random() * 360)                       + 'deg);';
       container.appendChild(piece);
     }
 
-    /* Balloons */
+    /* Balloons — radial-gradient sphere + shadow + knot child */
     for (var j = 0; j < 14; j++) {
-      var balloon = document.createElement('div');
+      var bColor   = COLORS[Math.floor(Math.random() * COLORS.length)];
+      var bLighter = shadeColor(bColor,  90);
+      var bDarker  = shadeColor(bColor, -55);
+      var balloon  = document.createElement('div');
       balloon.className = 'celebration-balloon';
       balloon.style.cssText =
-        'left:'               + (3 + Math.random() * 94)                           + 'vw;' +
-        'background:'         + COLORS[Math.floor(Math.random() * COLORS.length)] + ';'   +
-        'animation-delay:'    + (Math.random() * 1.8)                              + 's;'  +
-        'animation-duration:' + (3.5 + Math.random() * 2)                         + 's;';
+        'left:'               + (3 + Math.random() * 94) + 'vw;'  +
+        'background:radial-gradient(circle at 36% 32%,' + bLighter + ' 0%,' + bColor + ' 48%,' + bDarker + ' 100%);' +
+        'box-shadow:-5px -5px 12px rgba(255,255,255,0.18) inset,5px 5px 18px rgba(0,0,0,0.28) inset,0 10px 24px rgba(0,0,0,0.22);' +
+        'animation-delay:'    + (Math.random() * 2.5)    + 's;'   +
+        'animation-duration:' + (7   + Math.random() * 4) + 's;';
+
+      var knot = document.createElement('span');
+      knot.className = 'balloon-knot';
+      knot.style.background = bDarker;
+      balloon.appendChild(knot);
+
       container.appendChild(balloon);
     }
 
     setTimeout(function () {
       if (container.parentNode) container.parentNode.removeChild(container);
-    }, 6000);
+    }, 14000);
   }
 
   /* ── INIT ───────────────────────────────────────────────────────────────── */

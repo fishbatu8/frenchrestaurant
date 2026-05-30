@@ -1191,35 +1191,48 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 
 .celebration-balloon {
   position: absolute;
-  bottom: -130px;
-  width: 44px;
-  height: 54px;
+  bottom: -180px;
+  width: 72px;
+  height: 88px;
   border-radius: 50%;
   animation: balloon-rise ease-in-out forwards;
 }
 
-/* Diamond knot at the bottom of each balloon */
+/* Specular highlight — simulates 3D sphere lighting */
 .celebration-balloon::before {
   content: '';
   position: absolute;
-  bottom: -7px;
-  left: 50%;
-  transform: translateX(-50%) rotate(45deg);
-  width: 9px;
-  height: 9px;
-  background: inherit;
+  top: 13%;
+  left: 16%;
+  width: 30%;
+  height: 22%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.58);
+  transform: rotate(-22deg);
+  pointer-events: none;
 }
 
 /* String hanging below the balloon */
 .celebration-balloon::after {
   content: '';
   position: absolute;
-  bottom: -34px;
+  bottom: -50px;
   left: 50%;
   transform: translateX(-50%);
   width: 1px;
-  height: 28px;
-  background: rgba(0, 0, 0, 0.28);
+  height: 46px;
+  background: rgba(0, 0, 0, 0.30);
+}
+
+/* Diamond knot — injected as a child <span> by JS */
+.balloon-knot {
+  position: absolute;
+  bottom: -11px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 13px;
+  height: 13px;
+  border-radius: 1px;
 }
 
 @keyframes balloon-rise {
