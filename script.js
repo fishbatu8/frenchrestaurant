@@ -153,10 +153,11 @@
     }
 
     var timeSelect = $('#time');
-    for (var h = 12; h <= 22; h++) {
+    for (var h = 11; h <= 22; h++) {
       var mins = ['00', '30'];
       for (var m = 0; m < mins.length; m++) {
-        if (h === 22 && mins[m] === '30') break; /* cap at 22:00 */
+        if (h === 11 && mins[m] === '00') continue; /* start from 11:30 */
+        if (h === 22 && mins[m] === '30') break;    /* cap at 22:00 */
         var value = pad2(h) + ':' + mins[m];
         var tOpt  = document.createElement('option');
         tOpt.value       = value;
