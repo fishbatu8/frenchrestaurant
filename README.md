@@ -4,6 +4,8 @@ A single-page French restaurant website with online reservation enquiry, built w
 
 **Live site:** https://fishbatu8.github.io/frenchrestaurant/
 
+![Maison Lumière screenshot](screenshot.png)
+
 ---
 
 ## Features
